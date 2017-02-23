@@ -59,11 +59,9 @@ node() {
     }
 
     stage('deploy') {
-        node() {
-            def hostName = "${artifactId}-v${version}".replace(".", "-")
-            def majorHostName = "${artifactId}-v${majorVersion}".replace(".", "-")
-            cloudfoundry.push(appName, hostName, artifactPath, uniqueVersion, cfSpace, cfOrg, cfApiEndpoint, cloudFoundryCredentialsId)
-            cloudfoundry.mapRoute(appName, majorHostName, cfSpace, cfOrg, cfApiEndpoint, cloudFoundryCredentialsId)
-        }
+        def hostName = "${artifactId}-v${version}".replace(".", "-")
+        def majorHostName = "${artifactId}-v${majorVersion}".replace(".", "-")
+        cloudfoundry.push(appName, hostName, artifactPath, uniqueVersion, cfSpace, cfOrg, cfApiEndpoint, cloudFoundryCredentialsId)
+        cloudfoundry.mapRoute(appName, majorHostName, cfSpace, cfOrg, cfApiEndpoint, cloudFoundryCredentialsId)
     }
 }
