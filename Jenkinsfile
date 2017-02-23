@@ -30,6 +30,7 @@ node() {
     stage('package') {
         checkout scm
         sh("git checkout master && git pull origin master")
+        repositoryUrl = shellLib.pipe("git config --get remote.origin.url")
         artifactId = pom.artifactId(pwd() + "/pom.xml")
         version = new pom().version(pwd() + "/pom.xml")
         majorVersion = new pom().majorVersion(pwd() + "/pom.xml")
