@@ -6,6 +6,7 @@ def shell = new shell()
 def cloudfoundry = new cloudfoundry()
 def gitUtil = new git()
 def tools = new tools()
+def bintray = new bintray()
 
 node() {
 
