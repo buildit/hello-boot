@@ -40,7 +40,7 @@ node() {
         artifactPath = "target/${artifactId}-${uniqueVersion}.jar"
         commitId = shell.pipe("git rev-parse HEAD")
         sh "mvn -DnewVersion=${uniqueVersion} versions:set"
-        sh "mvn package"
+        sh "mvn clean package"
     }
 
     stage('tag') {
@@ -60,7 +60,6 @@ node() {
 
     stage('deploy') {
         node() {
-            unstash 'app-artifact'
             def hostName = "${artifactId}-v${version}".replace(".", "-")
             def majorHostName = "${artifactId}-v${majorVersion}".replace(".", "-")
             cloudfoundry.push(appName, hostName, artifactPath, uniqueVersion, cfSpace, cfOrg, cfApiEndpoint, cloudFoundryCredentialsId)
