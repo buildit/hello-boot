@@ -43,7 +43,6 @@ node() {
     }
 
     stage('tag') {
-        git poll: false, changelog: false, url: repositoryUrl, credentialsId: gitCredentialsId, branch: branch
         gitUtil.configureIdentity(gitUsername, gitEmail)
         sh("git checkout ${commitId}")
         sh("git tag -a ${uniqueVersion} -m \"Built version: ${uniqueVersion}\" ${commitId}")
