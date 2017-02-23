@@ -33,8 +33,8 @@ node() {
         sh("git checkout master && git pull origin master")
         repositoryUrl = shell.pipe("git config --get remote.origin.url")
         artifactId = pom.artifactId(pwd() + "/pom.xml")
-        version = new pom().version(pwd() + "/pom.xml")
-        majorVersion = new pom().majorVersion(pwd() + "/pom.xml")
+        version = pom.version(pwd() + "/pom.xml")
+        majorVersion = pom.majorVersion(pwd() + "/pom.xml")
         uniqueVersion = version + "." + date.timestamp()
         appName = "${artifactId}-${version}".replace(".", "-")
         artifactPath = "target/${artifactId}-${uniqueVersion}.jar"
@@ -55,7 +55,7 @@ node() {
     }
 
     stage('archive') {
-        bintray.upload(repoCredentialsId, artifactId, version, 'jar', 'target/*.jar', 'buildit', 'maven')
+        bintray.upload(repoCredentialsId, artifactId, uniqueVersion, 'jar', 'target/*.jar', 'buildit', 'maven')
     }
 
     stage('deploy') {
